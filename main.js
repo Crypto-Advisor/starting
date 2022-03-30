@@ -6,13 +6,12 @@ const fieldCharacter = '░';
 const pathCharacter = '*';
 
 let playerCoord = [0,0]
-let field
 let gameStatus = true;
 
 class Field {
 
-    Field(f){
-        this.field = f;
+    constructor(f){
+        this._field = f;
     }
 
     static getRandomInt(max){
@@ -57,18 +56,18 @@ class Field {
 
     playGame(){
         gameStatus = true
-        this.print
+        this.print()
         while(gameStatus){
-            let input = prompt('Enter direction you would like to move')
+            let input = prompt('Enter direction you would like to move: ')
             this.readInput(input)
             if(gameStatus){
-                this.print
+                this.print()
             }
         }
     }
     
     print(){
-        console.log(field)
+        console.log(this._field)
         // for(let i = 0;i<field.length;i++){
         //     console.log(field[i].join(''))
         // }
@@ -83,7 +82,7 @@ class Field {
             }
         }
         else if(input === 'd'){
-            if(playerCoord[0] === field.length-1){
+            if(playerCoord[0] === this._field.length-1){
                 console.log("already at bottom")
             } else{
                 this.movePlayer(playerCoord[0]+1, playerCoord[1])
@@ -97,7 +96,7 @@ class Field {
             }
         }
         else if(input === 'r'){
-            if(playerCoord[1] === field[0].length-1){
+            if(playerCoord[1] === this._field[0].length-1){
                 console.log("already at border")
             } else{
                 this.movePlayer(playerCoord[0], playerCoord[1]+1)
@@ -109,28 +108,27 @@ class Field {
     }
 
     movePlayer(x,y){
-        if(field[x][y] === hole){
-            this.lose
+        if(this._field[x][y] === hole){
+            this.lose()
         }
-        else if(field[x][y] === hat){
-            this.win
+        else if(this._field[x][y] === hat){
+            this.win()
         }
-        else if(field[x][y] == fieldCharacter){
-            field[playerCoord[0]][playerCoord[1]] = fieldCharacter;
-            field[x][y] = pathCharacter;
+        else if(this._field[x][y] == fieldCharacter){
+            this._field[playerCoord[0]][playerCoord[1]] = fieldCharacter;
+            this._field[x][y] = pathCharacter;
             playerCoord = [x , y]
-            this.print
         }
 
     }
 
     win(){
-        console.log('you lost.')
+        console.log('you won.')
         gameStatus = false;
     }
 
     lose(){
-        console.log('you won.')
+        console.log('you lost.')
         gameStatus = false
     }
     
